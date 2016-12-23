@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!-- Revolute-Revolute Manipulator -->
+<robot name="awagv" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!-- Rviz colors -->
+  <material name="grey">
+    <color rgba="0.2 0.2 0.2 1.0"/>
+  </material>
+
+  <material name="orange">
+    <color rgba="${255/255} ${108/255} ${10/255} 1.0"/>
+  </material>
+
+  <!-- Constants for robot dimensions -->
+  <xacro:property name="PI" value="3.1415926535897931"/>
+  <xacro:property name="RIGHT_ANGLE" value="1.570796327"/>
+
+  <!-- Used for fixing robot to Gazebo 'base_link' -->
+  <link name="base_link"/>
+
+  <joint name="fixed" type="fixed">
+    <parent link="base_link"/>
+    <child link="body_link"/>
+  </joint>
+
+<!-- ==================================================================body_link -->
+  <link name="body_link">
+    <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <axis xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://awagv_description/meshes/awagv.stl" scale="1 1 1"/>
+        </geometry>
+        <material name="grey"/>
+    </visual>
+  </link>
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++joint_wheel_r -->
+    <joint name="wheel_r_joint" type="continuous">
+      <parent link="body_link"/>
+      <child link="wheel_link_r"/>
+      <origin xyz="0.28 0 0.055" rpy="0 0 ${-RIGHT_ANGLE}"/>
+      <axis xyz="0 1 0"/>
+      <dynamics damping="0.7"/>
+    </joint>
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++joint_wheel_l -->
+    <joint name="wheel_l_joint" type="continuous">
+      <parent link="body_link"/>
+      <child link="wheel_link_l"/>
+      <origin xyz="-0.28 0 0.055" rpy="0 0 ${RIGHT_ANGLE}"/>
+      <axis xyz="0 1 0"/>
+      <dynamics damping="0.7"/>
+    </joint>
+<!-- ==================================================================link_wheel -->
+    <link name="wheel_link_r">
+        <visual>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+          <geometry>
+            <mesh filename="package://awagv_description/meshes/agvwheel.stl" scale="1 1 1"/>
+          </geometry>
+          <material name="orange"/>
+        </visual>
+    </link>
+<!-- ==================================================================link_wheel -->
+    <link name="wheel_link_l">
+        <visual>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+          <geometry>
+            <mesh filename="package://awagv_description/meshes/agvwheel.stl" scale="1 1 1"/>
+          </geometry>
+          <material name="orange"/>
+        </visual>
+    </link>
+
+</robot>
