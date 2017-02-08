@@ -16,27 +16,28 @@
   <xacro:property name="RIGHT_ANGLE" value="1.570796327"/>
 
   <!-- Used for fixing robot to Gazebo 'base_link' -->
-  <link name="base_link"/>
+  <link name="base_footprint"/>
 
   <joint name="fixed" type="fixed">
-    <parent link="base_link"/>
-    <child link="body_link"/>
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
   </joint>
 
-<!-- ==================================================================body_link -->
-  <link name="body_link">
+  <!-- ==================================================================body_link -->
+  <link name="base_link">
     <visual>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <axis xyz="0 0 0"/>
-        <geometry>
-          <mesh filename="package://awagv_description/meshes/awagv.stl" scale="1 1 1"/>
-        </geometry>
-        <material name="grey"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <axis xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://awagv_description/meshes/awagv.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="grey"/>
     </visual>
   </link>
+
 <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++joint_wheel_r -->
     <joint name="wheel_r_joint" type="continuous">
-      <parent link="body_link"/>
+      <parent link="base_link"/>
       <child link="wheel_link_r"/>
       <origin xyz="0.28 0 0.055" rpy="0 0 ${-RIGHT_ANGLE}"/>
       <axis xyz="0 1 0"/>
@@ -44,7 +45,7 @@
     </joint>
 <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++joint_wheel_l -->
     <joint name="wheel_l_joint" type="continuous">
-      <parent link="body_link"/>
+      <parent link="base_link"/>
       <child link="wheel_link_l"/>
       <origin xyz="-0.28 0 0.055" rpy="0 0 ${RIGHT_ANGLE}"/>
       <axis xyz="0 1 0"/>
@@ -70,22 +71,4 @@
           <material name="orange"/>
         </visual>
     </link>
-  <!-- ************ Gazebo Transmission ********************* -->
-  <xacro:wheel_trans_v0 prefix="right" />
-  <xacro:wheel_trans_v0 prefix="left" />
-
-  <gazebo>
-    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-    </plugin>
-  </gazebo>
-
-  <!-- ********* Gazebo Base ******* -->
-  <xacro:base_gazebo_v0/>
-  <xacro:wheel_gazebo_v0 prefix="right"/>
-  <xacro:wheel_gazebo_v0 prefix="left"/>
-  <xacro:wheel_gazebo_control_v0 rate="25"/>
-  <xacro:lrf_gazebo_v0 prefix="front"
-    min_rad="-1.65806278939" max_rad="1.65806278939"
-    min_range="0.10" max_range="5.0"/>
-
 </robot>
