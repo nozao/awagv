@@ -16,7 +16,12 @@
   <xacro:property name="RIGHT_ANGLE" value="1.570796327"/>
 
   <!-- Used for fixing robot to Gazebo 'base_link' -->
-  <link name="base_footprint"/>
+  <link name="base_footprint">
+    <origin xyz="0 0 0"/>
+  </link>
+  <gazebo reference="base_footprint">
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
 
   <joint name="fixed" type="fixed">
     <parent link="base_footprint"/>
@@ -31,6 +36,10 @@
       <geometry>
         <mesh filename="package://awagv_description/meshes/awagv.stl" scale="1 1 1"/>
       </geometry>
+      <inertial>
+        <mass value="18.85" />
+        <inertia ixx="1.009" ixy="0.064" ixz="0.095" iyy="0.818" iyz="-0.344" izz="0.867"/>
+      </inertial>
       <material name="grey"/>
     </visual>
   </link>
@@ -43,6 +52,18 @@
       <axis xyz="0 1 0"/>
       <dynamics damping="0.7"/>
     </joint>
+<!-- ****************************************************************Transmission wheel_r -->
+  <transmission name="right_wheel_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="wheel_r_joint">
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="left_wheel_motor">
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>30</mechanicalReduction>
+    </actuator>
+  </transmission>
+
 <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++joint_wheel_l -->
     <joint name="wheel_l_joint" type="continuous">
       <parent link="base_link"/>
@@ -51,6 +72,38 @@
       <axis xyz="0 1 0"/>
       <dynamics damping="0.7"/>
     </joint>
+<!-- ****************************************************************Transmission wheel_r -->
+  <transmission name="left_wheel_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="wheel_l_joint">
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="left_wheel_motor">
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>30</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>awagv</robotNamespace>
+    </plugin>
+  </gazebo>
+  <gazebo reference="base_link">
+    <selfCollide>true</selfCollide>
+    <mu1 value="0.05"/>
+    <mu2 value="0.05"/>
+  </gazebo>
+  <gazebo reference="wheel_link_l">
+    <selfCollide>true</selfCollide>
+    <mu1 value="0.8"/>
+    <mu2 value="0.8"/>
+  </gazebo>
+  <gazebo reference="wheel_link_r">
+    <selfCollide>true</selfCollide>
+    <mu1 value="0.8"/>
+    <mu2 value="0.8"/>
+  </gazebo>
+
 <!-- ==================================================================link_wheel -->
     <link name="wheel_link_r">
         <visual>
