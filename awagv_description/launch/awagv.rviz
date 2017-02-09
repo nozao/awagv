@@ -72,7 +72,22 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        caster_link:
+        caster_link_fl:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        caster_link_fr:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        caster_link_rl:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        caster_link_rr:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -102,7 +117,13 @@ Visualization Manager:
           Value: true
         base_link:
           Value: true
-        caster_link:
+        caster_link_fl:
+          Value: true
+        caster_link_fr:
+          Value: true
+        caster_link_rl:
+          Value: true
+        caster_link_rr:
           Value: true
         left_wheel_link:
           Value: true
@@ -119,7 +140,13 @@ Visualization Manager:
         odom:
           base_footprint:
             base_link:
-              caster_link:
+              caster_link_fl:
+                {}
+              caster_link_fr:
+                {}
+              caster_link_rl:
+                {}
+              caster_link_rr:
                 {}
               left_wheel_link:
                 {}
@@ -130,7 +157,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: odom
+    Fixed Frame: base_link
     Frame Rate: 30
   Name: root
   Tools:
@@ -151,7 +178,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 9.49342
+      Distance: 1.58555
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
@@ -163,10 +190,10 @@ Visualization Manager:
         Z: 0
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.540397
+      Pitch: -0.574603
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.47858
+      Yaw: 2.81358
     Saved: ~
 Window Geometry:
   Displays:
