@@ -1,0 +1,14 @@
+<launch>
+    <node pkg="joy" type="joy_node" name="joy_node">
+        <param name="dev" value="/dev/input/js1" />
+        <param name="deadzone" value="0.1" />
+        <param name="autorepeat_rate" value="5" />
+    </node>
+
+    <node pkg="awagv_control" name="joy2Twist" type="joy_teleop.py" output="screen">
+        <rosparam>
+            rate: 20
+        </rosparam>
+        <remap from="/cmd_vel" to="/awagv/diff_drive_controller/cmd_vel" />
+    </node>
+</launch>
